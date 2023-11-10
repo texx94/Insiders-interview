@@ -34,7 +34,7 @@ const rows = [
 
 export default function ScoreBoard() {
   const [page, setPage] = useState(0);
-  const [rowsPerPage] = useState(10);
+  const [rowsPerPage] = useState(8);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);

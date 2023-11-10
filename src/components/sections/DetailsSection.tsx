@@ -9,12 +9,12 @@ export default function DetailSection() {
     <SectionTitle title='- Details' />
       <Grid className='section-container' container spacing={2}>
         <Grid item xs={12} lg={8}>
-          <PresentationCard title='Speed graph'>
+          <PresentationCard title='Speed graph' height='15vh'>
             <div>TEst</div>
           </PresentationCard>
         </Grid>
         <Grid item xs={12} lg={4}>
-          <PresentationCard title='Statistics'>
+          <PresentationCard title='Statistics' height='15vh'>
             <div>TEst</div>
           </PresentationCard>
         </Grid>
