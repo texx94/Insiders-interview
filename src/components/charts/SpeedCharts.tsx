@@ -1,64 +1,35 @@
+import { useSelector } from 'react-redux';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { RootState } from '../../state/store';
+import { useMemo } from 'react';
 
-const data = [
-  {
-    speed: 1,
-    timestamp: 0,
-  },
-  {
-    speed: 2,
-    timestamp: 1,
-  },
-  {
-    speed: 1,
-    timestamp: 2,
-  },
-  {
-    speed: 4,
-    timestamp: 3,
-  },
-  {
-    speed: 3.5,
-    timestamp: 4,
-  },
-  {
-    speed: 0.5,
-    timestamp: 5,
-  },
-  {
-    speed: 2,
-    timestamp: 6,
-  },
-  {
-    speed: 3,
-    timestamp: 7,
-  },
-  {
-    speed: 6,
-    timestamp: 8,
-  },
-  {
-    speed: 5.8,
-    timestamp: 9,
-  },
-  {
-    speed: 5.5,
-    timestamp: 10,
-  },
-  {
-    speed: 5,
-    timestamp: 11,
-  },
-  {
-    speed: 4.6,
-    timestamp: 12.8,
-  }
-]
+interface athleteHistory {
+  athlete: string,
+  bestRank: number,
+  worstRank: number,
+  maxSpeed: number,
+  minSpeed: number,
+  speedHistory: {speed: number, timestamp: number}[],
+}
 
 export default function SpeedCharts() {
+  const history = useSelector((state: RootState) => state.data.history);
+
+  const selectedAthlete = '1001';
+
+  const selectedAthleteSpeedData = useMemo(
+    () => {
+      const athleteHistory = history.find((history: athleteHistory) => history.athlete === selectedAthlete);
+      
+      console.log("11231", athleteHistory?.speedHistory)
+      return athleteHistory?.speedHistory;
+    },
+    [history],
+  );
+
   return (
     <ResponsiveContainer width="100%" height={350}>
-      <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+      <LineChart data={selectedAthleteSpeedData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
         <CartesianGrid stroke="#ddd" strokeDasharray="3 4" />
         <Line type="monotone" dataKey="speed" stroke="#fa8f38" dot={false} />
         <XAxis

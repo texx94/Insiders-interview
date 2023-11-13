@@ -24,7 +24,7 @@ interface athleteHistory {
   worstRank: number,
   maxSpeed: number,
   minSpeed: number,
-  speedHistory: number[],
+  speedHistory: {speed: number, timestamp: number}[],
 }
 
 export default function AthleteStats() {
