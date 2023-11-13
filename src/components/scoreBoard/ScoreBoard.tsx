@@ -22,7 +22,7 @@ function createData(
 }
 
 export default function ScoreBoard() {
-  const messages = useSelector((state: RootState) => state.data.messages);
+  const lastMessage = useSelector((state: RootState) => state.data.lastMessage);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage] = useState(8);
@@ -33,14 +33,13 @@ export default function ScoreBoard() {
 
   const rows: rankingRow[] = useMemo(
     () => {
-      const lastMessage = messages[messages.length - 1];
       const rows = [];
       for (const athlete in lastMessage?.athletes) {
         rows.push(createData(athlete, lastMessage.athletes[athlete as keyof object]['rank']));
       }
       return rows.sort((a, b) => a.position - b.position);
     },
-    [messages],
+    [lastMessage],
   );
 
   const visibleRows = useMemo(

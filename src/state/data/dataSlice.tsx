@@ -6,7 +6,7 @@ interface record {
 
 interface dataState {
   isInitilized: boolean;
-  messages: record[];
+  lastMessage: record;
   history: athleteHistory[];
   athletes: string[];
   selectedAthlete: string;
@@ -27,7 +27,7 @@ interface athlete {
 
 const initialState: dataState = {
   isInitilized: false,
-  messages: [],
+  lastMessage: {athletes: {}},
   history: [],
   athletes: [],
   selectedAthlete: '',
@@ -43,8 +43,8 @@ const dataSlice = createSlice({
       state.athletes = athletes;
       state.selectedAthlete = athletes[0];
     },
-    addMessage: (state, action: PayloadAction<record>) => {
-      state.messages = [...state.messages, action.payload]
+    treatMessage: (state, action: PayloadAction<record>) => {
+      state.lastMessage = action.payload;
     },
     updateHistory: (state, action: PayloadAction<record>) => {
       const athletesData = action.payload?.athletes;
@@ -95,6 +95,6 @@ const dataSlice = createSlice({
   },
 });
 
-export const { addMessage, initData, updateHistory, setSelectedAthlete } = dataSlice.actions;
+export const { treatMessage, initData, updateHistory, setSelectedAthlete } = dataSlice.actions;
 
 export default dataSlice.reducer;

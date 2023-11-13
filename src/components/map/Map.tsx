@@ -20,11 +20,10 @@ function createData(
 }
 
 export default function Map() {
-  const messages = useSelector((state: RootState) => state.data.messages);
+  const lastMessage = useSelector((state: RootState) => state.data.lastMessage);
 
   const markers: markers[] = useMemo(
     () => {
-      const lastMessage = messages[messages.length - 1];
       const markers = [];
       for (const athlete in lastMessage?.athletes) {
         const lat = lastMessage.athletes[athlete as keyof object]['latitude'];
@@ -33,7 +32,7 @@ export default function Map() {
       }
       return markers;
     },
-    [messages],
+    [lastMessage],
   );
 
   const customIcon = new Icon({
