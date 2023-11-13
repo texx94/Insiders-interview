@@ -6,33 +6,24 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, TablePagination } from '@mui/material';
+import { RootState } from '../../state/store';
+import { useSelector } from 'react-redux';
 
-function createData(
-  position: number,
-  athlete: string,
-) {
-  return { position, athlete };
+interface rankingRow {
+  athlete: string
+  position: number;
 }
 
-const rows = [
-  createData(1, "1001"),
-  createData(2, "1002"),
-  createData(3, "1003"),
-  createData(4, "1004"),
-  createData(5, "1005"),
-  createData(6, "1006"),
-  createData(7, "1009"),
-  createData(8, "1008"),
-  createData(9, "1007"),
-  createData(10, "1010"),
-  createData(11, "1011"),
-  createData(12, "10014"),
-  createData(13, "2311"),
-  createData(14, "44"),
-  createData(15, "1243"),
-];
+function createData(
+  athlete: string,
+  position: number,
+) {
+  return { athlete, position };
+}
 
 export default function ScoreBoard() {
+  const messages = useSelector((state: RootState) => state.data.messages);
+
   const [page, setPage] = useState(0);
   const [rowsPerPage] = useState(8);
 
@@ -40,13 +31,25 @@ export default function ScoreBoard() {
     setPage(newPage);
   };
 
+  const rows: rankingRow[] = useMemo(
+    () => {
+      const lastMessage = messages[messages.length - 1];
+      const rows = [];
+      for (const athlete in lastMessage?.athletes) {
+        rows.push(createData(athlete, lastMessage.athletes[athlete as keyof object]['rank']));
+      }
+      return rows.sort((a, b) => a.position - b.position);
+    },
+    [messages],
+  );
+
   const visibleRows = useMemo(
     () =>
       rows.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [page, rowsPerPage],
+    [rows, page, rowsPerPage],
   );
  
   return (
