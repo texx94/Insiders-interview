@@ -6,7 +6,7 @@ import { useMemo } from "react";
 
 function createData(
   label: string,
-  value: number | undefined,
+  value: number | string | undefined,
 ) {
   return { label, value };
 }
@@ -38,8 +38,8 @@ export default function AthleteStats() {
       const stats = [];
       stats.push(createData("Best Rank", athleteHistory?.bestRank));
       stats.push(createData("Worst Rank", athleteHistory?.worstRank));
-      stats.push(createData("Max Speed", athleteHistory?.maxSpeed));
-      stats.push(createData("Min Speed", athleteHistory?.minSpeed));
+      stats.push(createData("Max Speed", athleteHistory?.maxSpeed.toPrecision(3)));
+      stats.push(createData("Min Speed", athleteHistory?.minSpeed.toPrecision(3)));
       return stats;
     },
     [history],
