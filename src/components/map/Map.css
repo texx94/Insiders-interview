@@ -2,3 +2,16 @@
     height: 50vh;
     z-index: 0;
 }
+
+.test {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.leaflet-tooltip-top:before, 
+.leaflet-tooltip-bottom:before, 
+.leaflet-tooltip-left:before, 
+.leaflet-tooltip-right:before {
+    border: none !important;
+}
