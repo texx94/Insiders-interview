@@ -5,8 +5,11 @@ interface record {
 }
 
 interface dataState {
+  isInitilized: boolean;
   messages: record[];
   history: athleteHistory[];
+  athletes: string[];
+  selectedAthlete: string;
 }
 
 interface athleteHistory {
@@ -18,15 +21,28 @@ interface athleteHistory {
   speedHistory: { speed: number, timestamp: number }[],
 }
 
+interface athlete {
+  athlete: string,
+}
+
 const initialState: dataState = {
+  isInitilized: false,
   messages: [],
   history: [],
+  athletes: [],
+  selectedAthlete: '',
 };
 
 const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    initData: (state, action: PayloadAction<record>) => {
+      state.isInitilized = true;
+      const athletes = Object.getOwnPropertyNames(action.payload?.athletes)
+      state.athletes = athletes;
+      state.selectedAthlete = athletes[0];
+    },
     addMessage: (state, action: PayloadAction<record>) => {
       state.messages = [...state.messages, action.payload]
     },
@@ -34,7 +50,7 @@ const dataSlice = createSlice({
       const athletesData = action.payload?.athletes;
       for (const athlete in athletesData) {
         const athleteHistoryIndex = state.history.findIndex((athleteHistory) => athleteHistory.athlete === athlete);
-        if (athleteHistoryIndex == -1) {
+        if (athleteHistoryIndex === -1) {
           // add record in history
           state.history.push({
             athlete: athlete,
@@ -73,9 +89,12 @@ const dataSlice = createSlice({
         }
       }
     },
+    setSelectedAthlete: (state, action: PayloadAction<athlete>) => {
+      state.selectedAthlete = action.payload.athlete;
+    },
   },
 });
 
-export const { addMessage, updateHistory } = dataSlice.actions;
+export const { addMessage, initData, updateHistory, setSelectedAthlete } = dataSlice.actions;
 
 export default dataSlice.reducer;

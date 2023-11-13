@@ -14,8 +14,7 @@ interface athleteHistory {
 
 export default function SpeedCharts() {
   const history = useSelector((state: RootState) => state.data.history);
-
-  const selectedAthlete = '1001';
+  const selectedAthlete = useSelector((state: RootState) => state.data.selectedAthlete);
 
   const selectedAthleteSpeedData = useMemo(
     () => {

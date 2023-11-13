@@ -3,20 +3,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../state/store";
 import { useMemo } from "react";
 
-
 function createData(
   label: string,
   value: number | string | undefined,
 ) {
   return { label, value };
 }
-
-const data = [
-  createData("Max Speed", 12),
-  createData("Min Speed", 1.123),
-  createData("Best Rank", 1),
-  createData("Worst Rank", 12),
-];
 
 interface athleteHistory {
   athlete: string,
@@ -29,8 +21,7 @@ interface athleteHistory {
 
 export default function AthleteStats() {
   const history = useSelector((state: RootState) => state.data.history);
-
-  const selectedAthlete = '1001';
+  const selectedAthlete = useSelector((state: RootState) => state.data.selectedAthlete);
 
   const selectedAthleteStats = useMemo(
     () => {
