@@ -1,8 +1,12 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../state/store";
+import { useMemo } from "react";
+
 
 function createData(
   label: string,
-  value: number,
+  value: number | undefined,
 ) {
   return { label, value };
 }
@@ -14,12 +18,38 @@ const data = [
   createData("Worst Rank", 12),
 ];
 
+interface athleteHistory {
+  athlete: string,
+  bestRank: number,
+  worstRank: number,
+  maxSpeed: number,
+  minSpeed: number,
+  speedHistory: number[],
+}
+
 export default function AthleteStats() {
+  const history = useSelector((state: RootState) => state.data.history);
+
+  const selectedAthlete = '1001';
+
+  const selectedAthleteStats = useMemo(
+    () => {
+      const athleteHistory = history.find((history: athleteHistory) => history.athlete === selectedAthlete);
+      const stats = [];
+      stats.push(createData("Best Rank", athleteHistory?.bestRank));
+      stats.push(createData("Worst Rank", athleteHistory?.worstRank));
+      stats.push(createData("Max Speed", athleteHistory?.maxSpeed));
+      stats.push(createData("Min Speed", athleteHistory?.minSpeed));
+      return stats;
+    },
+    [history],
+  );
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
         <TableBody>
-          {data.map((row) => (
+          {selectedAthleteStats.map((row) => (
             <TableRow
               key={row.label}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
