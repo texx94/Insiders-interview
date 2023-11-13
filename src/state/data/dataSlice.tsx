@@ -16,7 +16,6 @@ const dataSlice = createSlice({
     initialState,
     reducers: {
         addMessage: (state, action: PayloadAction<record>) => {
-            console.log(action)
             state.messages = [ ...state.messages, action.payload]
         }
     },

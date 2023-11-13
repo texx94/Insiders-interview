@@ -17,7 +17,6 @@ function App() {
     };
     client.onmessage = (message : IMessageEvent) => {
       const messagePayload = JSON.parse(message.data.toString());
-      console.log('got reply! ', messagePayload);
       dispatch(addMessage(messagePayload));
     };
   }, [dispatch]);
