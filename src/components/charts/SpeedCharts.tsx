@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
 import { RootState } from '../../state/store';
 import { useMemo } from 'react';
 
@@ -42,6 +42,7 @@ export default function SpeedCharts() {
           type='number'
           label={{ value: 'Speed', angle: -90, position: 'centerLeft' }}
         />
+        <Tooltip />
       </LineChart>
     </ResponsiveContainer>
   )
